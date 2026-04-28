@@ -73,16 +73,34 @@ export const NeuralGrid = () => {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 0, 0, ${0.05 * (1 - distance / maxDistance)})`;
-            ctx.lineWidth = 1;
+            ctx.strokeStyle = `rgba(0, 0, 0, ${0.03 * (1 - distance / maxDistance)})`;
+            ctx.lineWidth = 0.5;
             ctx.stroke();
           }
         }
       }
     };
 
+    const drawGrid = () => {
+      const spacing = 60;
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(0, 0, 0, 0.02)';
+      ctx.lineWidth = 0.5;
+
+      for (let x = 0; x <= width; x += spacing) {
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, height);
+      }
+      for (let y = 0; y <= height; y += spacing) {
+        ctx.moveTo(0, y);
+        ctx.lineTo(width, y);
+      }
+      ctx.stroke();
+    };
+
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
+      drawGrid();
       particles.forEach((p) => {
         p.update();
         p.draw();

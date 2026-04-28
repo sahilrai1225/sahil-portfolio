@@ -1,23 +1,41 @@
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { portfolioData, Project } from '../data/portfolio';
-import { Github, ArrowRight, Code2, Database, Layers, CheckCircle2 } from 'lucide-react';
+import { Github, ArrowRight, Code2, Database, Layers, CheckCircle2, Brain, LineChart } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '../lib/utils';
+
+import { 
+  ResponsiveContainer, 
+  LineChart as RechartsLineChart, 
+  Line, 
+  BarChart as RechartsBarChart, 
+  Bar, 
+  PieChart as RechartsPieChart, 
+  Pie, 
+  RadarChart as RechartsRadarChart, 
+  Radar, 
+  PolarGrid, 
+  PolarAngleAxis, 
+  XAxis, 
+  YAxis, 
+  Tooltip, 
+  Cell 
+} from 'recharts';
 
 export const ProjectSection = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   return (
-    <section id="projects" className="py-24">
-      <div className="mb-16">
-        <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 block">Case Studies</span>
-        <h2 className="text-5xl font-bold tracking-tight text-gray-900 mb-4">Top Engineering Projects</h2>
-        <p className="text-gray-500 max-w-2xl">
-          A selection of production-grade systems combining quantitative modeling, deep learning, and efficient infrastructure design.
+    <section id="projects" className="py-32 border-t border-accent-soft/20">
+      <div className="mb-20 text-center max-w-3xl mx-auto">
+        <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-6 block">Case Studies</span>
+        <h2 className="text-5xl md:text-6xl font-black tracking-tighter text-ink leading-[1.1] uppercase mb-8">Selected <br/>Intelligence.</h2>
+        <p className="text-gray-500 font-medium leading-relaxed">
+          Developing production-grade models that bridge the gap between <span className="text-ink">quantitative rigor</span> and efficient system design.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {portfolioData.projects.map((project, idx) => (
           <motion.div
             key={project.id}
@@ -26,45 +44,59 @@ export const ProjectSection = () => {
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
             onClick={() => setSelectedProject(project)}
-            className="group cursor-pointer bg-white border border-gray-200 rounded-2xl p-8 hover:border-accent hover:shadow-xl hover:shadow-accent/5 transition-all relative overflow-hidden"
+            className="group cursor-pointer bg-white border border-accent-soft/10 rounded-[3rem] p-10 hover:border-accent hover:shadow-[0_40px_100px_-20px_rgba(184,157,119,0.15)] transition-all relative overflow-hidden"
           >
-            <div className="flex justify-between items-start mb-12">
-              <div className="text-[10px] font-bold text-accent px-2 py-0.5 bg-indigo-50 rounded uppercase font-mono">
-                System #0{idx + 1}
-              </div>
-              <div className="flex gap-3">
-                <a 
-                  href={project.github} 
-                  className="text-gray-300 hover:text-accent transition-colors"
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  <Github size={18} />
-                </a>
-              </div>
-            </div>
-
-            <h3 className="text-2xl font-extrabold tracking-tight mb-2 group-hover:text-accent transition-colors leading-tight">{project.title}</h3>
-            <p className="text-gray-500 text-xs mb-8 leading-relaxed font-medium">{project.oneLiner}</p>
-
-            <div className="flex flex-wrap gap-2 mb-8">
-              {project.tech.map(t => (
-                <span key={t} className="text-[9px] font-bold uppercase tracking-wider bg-gray-50 text-gray-400 px-2 py-1 rounded-full border border-gray-100 font-mono">
-                  {t}
-                </span>
-              ))}
-            </div>
-
-            <div className="border-t border-gray-50 pt-6">
-              <div className="text-[10px] text-gray-400 uppercase font-bold mb-3 tracking-widest">Key Metric</div>
-              <div className="flex items-center gap-3">
-                <div className="h-1 flex-1 bg-gray-100 rounded-full overflow-hidden">
-                   <motion.div 
-                     initial={{ width: 0 }}
-                     whileInView={{ width: '92%' }}
-                     className="h-full bg-accent"
-                   />
+            {/* Project "Image" / Illustration Slot */}
+            <div className="aspect-[16/9] bg-bg-warm rounded-[2rem] mb-10 overflow-hidden relative border border-accent/5">
+                {project.image && (
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110"
+                    referrerPolicy="no-referrer"
+                  />
+                )}
+                {/* Specific project visuals could go here */}
+                <div className="absolute inset-0 p-8 flex items-end justify-between bg-gradient-to-t from-bg-warm/80 via-transparent to-transparent">
+                   <div className="text-[10px] font-black text-accent uppercase tracking-widest font-mono">SYS_ARCH: {project.category}</div>
+                   <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest font-mono font-mono">0{idx+1}</div>
                 </div>
-                <span className="text-xs font-bold text-accent font-mono">92%</span>
+                {!project.image && (
+                  <div className="absolute inset-0 flex items-center justify-center opacity-40 group-hover:opacity-80 transition-opacity">
+                    {project.category === 'AI/ML' && <Brain size={80} className="text-accent" />}
+                    {project.category === 'NLP' && <Code2 size={80} className="text-accent" />}
+                    {project.category === 'Data Science' && <Database size={80} className="text-accent" />}
+                    {project.category === 'BI & Analytics' && <LineChart size={80} className="text-accent" />}
+                  </div>
+                )}
+            </div>
+
+            <div className="space-y-6">
+              <h3 className="text-3xl font-black tracking-[-0.03em] text-ink leading-tight uppercase group-hover:text-accent transition-colors">{project.title}</h3>
+              <p className="text-gray-500 text-sm leading-relaxed font-medium line-clamp-2">{project.oneLiner}</p>
+
+              <div className="space-y-4">
+                <div className="text-[8px] font-black text-gray-400 uppercase tracking-widest flex items-center gap-2">
+                  <Code2 size={10} className="text-accent" /> Built With
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.slice(0, 4).map(t => (
+                    <span key={t} className="text-[9px] font-black uppercase tracking-widest bg-accent/5 text-accent px-3 py-1.5 rounded-full border border-accent/10">
+                      {t}
+                    </span>
+                  ))}
+                  {project.tech.length > 4 && (
+                    <span className="text-[9px] font-black uppercase tracking-widest text-gray-300 px-1 py-1.5">+{project.tech.length - 4}</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-accent-soft/10 flex items-center justify-between">
+                <div className="text-[10px] font-black text-ink uppercase tracking-widest flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                  View Case Study
+                </div>
+                <ArrowRight size={18} className="text-accent group-hover:translate-x-2 transition-transform" />
               </div>
             </div>
           </motion.div>
@@ -72,177 +104,310 @@ export const ProjectSection = () => {
       </div>
 
       {/* Case Study Modal/Overlay */}
-      {selectedProject && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-end">
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="absolute inset-0 bg-black/20 backdrop-blur-sm"
-            onClick={() => setSelectedProject(null)}
-          />
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            className="relative w-full max-w-4xl h-full bg-white shadow-2xl p-8 md:p-16 overflow-y-auto"
-          >
-            <button 
+      <AnimatePresence>
+        {selectedProject && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-8">
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="absolute inset-0 bg-white/90 backdrop-blur-3xl"
               onClick={() => setSelectedProject(null)}
-              className="absolute top-8 right-8 text-xs font-bold uppercase tracking-widest hover:opacity-50 transition-opacity"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              className="relative w-full max-w-6xl max-h-[90vh] bg-white shadow-[0_50px_100px_-20px_rgba(0,0,0,0.15)] border border-gray-100 rounded-[3rem] overflow-hidden"
             >
-              [ Close Case Study ]
-            </button>
+              <button 
+                onClick={() => setSelectedProject(null)}
+                className="absolute top-8 right-8 z-50 w-12 h-12 bg-gray-100 hover:bg-gray-200 rounded-full flex items-center justify-center transition-colors"
+              >
+                <ArrowRight size={20} className="-rotate-180" />
+              </button>
 
-            <div className="max-w-2xl">
-              <div className="flex items-center gap-2 mb-4">
-                 <span className="text-xs font-bold uppercase tracking-widest text-gray-400 px-2 py-1 border border-gray-100 rounded">Case Study: 0{portfolioData.projects.indexOf(selectedProject) + 1}</span>
-                 {selectedProject.github && (
-                   <a href={selectedProject.github} className="text-gray-400 hover:text-black flex items-center gap-1 text-xs font-bold uppercase tracking-widest ml-4">
-                     <Github size={14} /> Github Repo
-                   </a>
-                 )}
-              </div>
-              <h2 className="text-5xl font-bold tracking-tighter mb-8 leading-none">{selectedProject.title}</h2>
-              
-              <div className="grid grid-cols-3 gap-8 mb-16 border-y border-gray-100 py-8">
-                <div>
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2 whitespace-nowrap">Core Architect</div>
-                  <div className="text-sm font-semibold truncate">Sahil Rai</div>
-                </div>
-                <div>
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Category</div>
-                  <div className="text-sm font-semibold">AI/ML System</div>
-                </div>
-                <div>
-                  <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-2">Status</div>
-                  <div className="text-sm font-semibold text-green-600">Production Ready</div>
-                </div>
-              </div>
-
-              <div className="space-y-16">
-                 <section>
-                  <h4 className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black mb-6">
-                    <Database size={14} /> Built With (Stack)
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedProject.tech.map(t => (
-                      <span key={t} className="px-3 py-1 bg-gray-50 border border-gray-100 rounded-lg text-xs font-bold text-gray-600">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </section>
-
-                <section>
-                  <h4 className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black mb-6">
-                    <Layers size={14} /> System Insight & Impact
-                  </h4>
-                  <p className="text-gray-600 leading-relaxed mb-6 italic">{selectedProject.oneLiner}</p>
-                  <ul className="space-y-4">
-                    {selectedProject.impact.map((im, i) => (
-                      <li key={i} className="flex gap-3 text-sm text-gray-700 leading-relaxed">
-                        <CheckCircle2 size={18} className="text-black shrink-0 mt-0.5" />
-                        {im}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-
-                <section className="bg-black text-white p-8 rounded-3xl overflow-hidden relative group/metrics">
-                  <div className="absolute top-0 right-0 p-4 opacity-10 group-hover/metrics:opacity-20 transition-opacity">
-                    <Database size={80} />
-                  </div>
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-8 relative z-10">System Telemetry & Data Visualization</h4>
-                  
-                  {/* Dynamic Interactive Layer based on Project Type */}
-                  <div className="h-48 flex items-end gap-1 relative z-10">
-                    {selectedProject.id === 'stock-market-prediction' && (
-                       <div className="w-full h-full flex items-center justify-center border border-white/10 rounded-xl relative overflow-hidden">
-                          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(79,70,229,0.1),transparent)]" />
-                          <div className="w-full px-4 space-y-4">
-                            <div className="flex justify-between items-end h-24 gap-1">
-                              {Array.from({ length: 30 }).map((_, i) => (
-                                <div key={i} className="flex-1 bg-green-500/40 rounded-t-sm" style={{ height: `${30 + Math.sin(i * 0.5) * 40 + Math.random() * 20}%` }} />
-                              ))}
-                            </div>
-                            <div className="flex justify-between text-[8px] font-mono text-gray-500">
-                              <span>T-24H</span>
-                              <span className="text-green-400">PREDICTED BULLISH REVERSAL</span>
-                              <span>NOW</span>
-                            </div>
-                          </div>
-                       </div>
-                    )}
-                    {selectedProject.id === 'ai-research-assistant' && (
-                      <div className="w-full h-full grid grid-cols-5 gap-2 p-4">
-                        {Array.from({ length: 15 }).map((_, i) => (
-                          <div key={i} className={cn("rounded-lg border flex items-center justify-center", i % 4 === 0 ? "bg-accent/20 border-accent/40" : "bg-white/5 border-white/10")}>
-                             <div className={cn("w-1 h-1 rounded-full", i % 4 === 0 ? "bg-accent animate-pulse" : "bg-white/20")} />
-                          </div>
-                        ))}
-                        <div className="col-span-5 text-center text-[8px] font-mono text-gray-400 mt-2 uppercase tracking-widest">Semantic Vector Retrieval Space</div>
+              <div className="h-full overflow-y-auto custom-scrollbar">
+                <div className="grid lg:grid-cols-12 min-h-full">
+                  {/* Left Column: Content */}
+                  <div className="lg:col-span-7 p-8 md:p-16">
+                    <header className="mb-16">
+                      <div className="flex items-center gap-3 mb-6">
+                        <span className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-accent px-3 py-1 bg-accent/10 rounded-full">
+                          Case Study: {selectedProject.category}
+                        </span>
+                        <span className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-gray-400 font-mono">
+                          0{portfolioData.projects.indexOf(selectedProject) + 1}
+                        </span>
                       </div>
-                    )}
-                    {selectedProject.id !== 'stock-market-prediction' && selectedProject.id !== 'ai-research-assistant' && (
-                      Array.from({ length: 48 }).map((_, i) => (
-                        <div 
-                          key={i} 
-                          className="flex-1 bg-white/20 rounded-t-sm"
-                          style={{ height: `${20 + Math.random() * 80}%` }}
-                        />
-                      ))
-                    )}
-                  </div>
-                  <div className="mt-6 grid grid-cols-4 gap-4 relative z-10 border-t border-white/10 pt-6">
-                    <div>
-                      <div className="text-xl font-bold tracking-tighter mb-0.5">85.4%</div>
-                      <div className="text-[8px] font-bold uppercase tracking-widest text-gray-500">Confidence</div>
-                    </div>
-                    <div>
-                      <div className="text-xl font-bold tracking-tighter mb-0.5">14ms</div>
-                      <div className="text-[8px] font-bold uppercase tracking-widest text-gray-500">Lat (p99)</div>
-                    </div>
-                    <div>
-                      <div className="text-xl font-bold tracking-tighter mb-0.5">CPU 0.4</div>
-                      <div className="text-[8px] font-bold uppercase tracking-widest text-gray-500">Load Factor</div>
-                    </div>
-                    <div>
-                      <div className="text-xl font-bold tracking-tighter mb-0.5">99.9%</div>
-                      <div className="text-[8px] font-bold uppercase tracking-widest text-gray-500">Uptime</div>
-                    </div>
-                  </div>
-                </section>
+                      <h2 className="text-5xl md:text-7xl font-extrabold tracking-tighter text-ink leading-[0.9] mb-8 uppercase">
+                        {selectedProject.title}
+                      </h2>
+                      <p className="text-xl text-gray-500 font-medium leading-relaxed italic border-l-4 border-accent pl-8 py-2">
+                        "{selectedProject.oneLiner}"
+                      </p>
+                    </header>
 
-                <section className="bg-gray-50 p-8 rounded-3xl border border-gray-200">
-                  <h4 className="text-xs font-bold uppercase tracking-widest text-black mb-6">Case Study Flow</h4>
-                  <div className="space-y-10">
-                    <div className="grid md:grid-cols-4 gap-4">
-                      <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">01 Problem</div>
-                      <div className="md:col-span-3 text-sm text-gray-700 leading-relaxed">{selectedProject.problem}</div>
-                    </div>
-                    <div className="grid md:grid-cols-4 gap-4 border-t border-gray-200 pt-10">
-                      <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">02 System Design</div>
-                      <div className="md:col-span-3 text-sm text-gray-700 leading-relaxed">{selectedProject.systemDesign}</div>
-                    </div>
-                    <div className="grid md:grid-cols-4 gap-4 border-t border-gray-200 pt-10">
-                      <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">03 Approach</div>
-                      <div className="md:col-span-3 text-sm text-gray-700 leading-relaxed">{selectedProject.approach}</div>
-                    </div>
-                    <div className="grid md:grid-cols-4 gap-4 border-t border-gray-200 pt-10">
-                      <div className="text-[10px] font-bold uppercase tracking-widest text-gray-400">04 Results</div>
-                      <div className="md:col-span-3 text-sm text-gray-700 leading-relaxed font-bold">{selectedProject.results}</div>
+                    <div className="space-y-20">
+                      <section>
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-black mb-8 border-b border-gray-100 pb-4">Strategic Impact</h4>
+                        <div className="grid gap-4">
+                          {selectedProject.impact.map((point, idx) => (
+                            <div key={idx} className="flex gap-4 p-6 bg-gray-50 rounded-3xl border border-gray-200/50 hover:bg-white hover:shadow-xl hover:shadow-accent/5 transition-all">
+                              <div className="w-8 h-8 rounded-xl bg-accent/10 flex items-center justify-center shrink-0">
+                                <CheckCircle2 size={16} className="text-accent" />
+                              </div>
+                              <p className="text-sm font-semibold text-gray-700 leading-relaxed">{point}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+
+                      <section>
+                        <div className="flex items-center gap-3 mb-8 border-b border-gray-100 pb-4">
+                          <Layers size={18} className="text-accent" />
+                          <h4 className="text-xs font-bold uppercase tracking-widest text-black">Built With</h4>
+                        </div>
+                        <div className="flex flex-wrap gap-3">
+                          {selectedProject.tech.map(t => (
+                            <div key={t} className="px-5 py-3 bg-bg-warm/50 border border-accent/20 rounded-2xl flex items-center gap-3 hover:border-accent hover:bg-white transition-all group/tag">
+                              <div className="w-2 h-2 rounded-full bg-accent group-hover/tag:scale-125 transition-transform" />
+                              <span className="text-[11px] font-black uppercase tracking-widest text-ink">{t}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+
+                      <section className="bg-gray-50 p-8 md:p-12 rounded-[2.5rem] border border-gray-200">
+                        <h4 className="text-xs font-bold uppercase tracking-widest text-black mb-10">Case Study Flow</h4>
+                        <div className="space-y-12">
+                          {[
+                            { label: 'The Problem', content: selectedProject.problem },
+                            { label: 'System Design', content: selectedProject.systemDesign },
+                            { label: 'Approach', content: selectedProject.approach },
+                            { label: 'Results & ROI', content: selectedProject.results }
+                          ].map((step, i) => (
+                            <div key={step.label} className="relative pl-10">
+                              <div className="absolute left-0 top-0 w-6 h-6 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-[10px] font-bold text-gray-400 font-mono">
+                                0{i+1}
+                              </div>
+                              <h5 className="text-[10px] font-bold uppercase tracking-widest text-accent mb-3">{step.label}</h5>
+                              <p className="text-sm font-medium text-gray-600 leading-relaxed">{step.content}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </section>
+
+                      <div className="p-10 bg-black text-white rounded-[2.5rem] relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-20 transition-opacity">
+                          <Code2 size={120} />
+                        </div>
+                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-6">Core Engineering Insight</h4>
+                        <p className="text-2xl font-bold tracking-tight italic relative z-10 leading-snug">
+                          "{selectedProject.insights}"
+                        </p>
+                      </div>
+
+                      <div className="flex items-center gap-8 pt-8 border-t border-gray-100">
+                        {selectedProject.github && (
+                          <a href={selectedProject.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-accent transition-all group">
+                            <Github size={18} className="group-hover:scale-110 transition-transform" /> Repository
+                          </a>
+                        )}
+                        {selectedProject.demo && (
+                          <a href={selectedProject.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-accent transition-all group">
+                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" /> Live Demo
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </section>
 
-                <div className="p-8 border-2 border-black/5 rounded-3xl bg-black/5 flex flex-col items-center text-center gap-4">
-                   <div className="text-xs font-bold uppercase tracking-widest text-gray-400">Core Engineering Insight</div>
-                   <p className="text-lg font-medium text-black max-w-lg">"{selectedProject.insights}"</p>
+                  {/* Right Column: Visualization & Persistence */}
+                  <div className="lg:col-span-5 bg-gray-50 border-l border-gray-100 p-8 md:p-16 sticky top-0 h-auto lg:h-full">
+                    <div className="sticky top-16 space-y-12">
+                      <section className="bg-black text-white p-10 rounded-[3rem] overflow-hidden relative group/metrics shadow-2xl shadow-black/20">
+                        <div className="absolute top-0 right-0 p-6 opacity-10 group-hover/metrics:opacity-20 transition-opacity">
+                          <Database size={100} />
+                        </div>
+                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-500 mb-10 relative z-10 font-mono tracking-[0.2em]">Live System Telemetry</h4>
+                        
+                        <div className="h-64 relative z-10 mb-12 border-b border-white/10 pb-4">
+                          {selectedProject.chartType === 'line' && (
+                            <ResponsiveContainer width="100%" height="100%">
+                              <RechartsLineChart data={selectedProject.chartData}>
+                                <XAxis dataKey="date" hide />
+                                <YAxis hide domain={['auto', 'auto']} />
+                                <Tooltip 
+                                  content={({ active, payload, label }) => {
+                                    if (active && payload && payload.length) {
+                                      return (
+                                        <div className="bg-bg-warm/10 backdrop-blur-xl border border-accent/20 p-4 rounded-xl shadow-2xl">
+                                          <p className="text-[10px] font-black uppercase tracking-tighter text-gray-500 mb-2 font-mono">{label || 'TELEMETRY'}</p>
+                                          {payload.map((p, i) => (
+                                            <p key={i} className="text-xs font-black text-white uppercase flex items-center justify-between gap-4">
+                                              <span className="text-accent">{p.name}:</span>
+                                              <span>{p.value}</span>
+                                            </p>
+                                          ))}
+                                        </div>
+                                      );
+                                    }
+                                    return null;
+                                  }}
+                                />
+                                <Line name="Actual" type="monotone" dataKey="actual" stroke="#B89D77" strokeWidth={3} dot={false} />
+                                <Line name="Forecast" type="monotone" dataKey="forecast" stroke="#fff" strokeWidth={2} strokeDasharray="5 5" dot={false} />
+                              </RechartsLineChart>
+                            </ResponsiveContainer>
+                          )}
+                          {selectedProject.chartType === 'bar' && (
+                            <ResponsiveContainer width="100%" height="100%">
+                              <RechartsBarChart data={selectedProject.chartData}>
+                                <XAxis dataKey="name" hide />
+                                <Tooltip 
+                                  content={({ active, payload, label }) => {
+                                    if (active && payload && payload.length) {
+                                      return (
+                                        <div className="bg-bg-warm/10 backdrop-blur-xl border border-accent/20 p-4 rounded-xl shadow-2xl">
+                                          <p className="text-[10px] font-black uppercase tracking-tighter text-accent mb-2 font-mono">{label}</p>
+                                          <p className="text-xs font-black text-white uppercase flex items-center justify-between gap-4">
+                                            <span className="text-gray-500">Metric:</span>
+                                            <span>{payload[0].value}</span>
+                                          </p>
+                                        </div>
+                                      );
+                                    }
+                                    return null;
+                                  }}
+                                />
+                                <Bar dataKey="score" fill="#B89D77" radius={[4, 4, 0, 0]} />
+                              </RechartsBarChart>
+                            </ResponsiveContainer>
+                          )}
+                          {selectedProject.chartType === 'pie' && (
+                            <ResponsiveContainer width="100%" height="100%">
+                              <RechartsPieChart>
+                                <Pie
+                                  data={selectedProject.chartData}
+                                  innerRadius={60}
+                                  outerRadius={80}
+                                  paddingAngle={5}
+                                  dataKey="value"
+                                >
+                                  <Cell fill="#B89D77" />
+                                  <Cell fill="#333" />
+                                </Pie>
+                                <Tooltip 
+                                  content={({ active, payload }) => {
+                                    if (active && payload && payload.length) {
+                                      return (
+                                        <div className="bg-bg-warm/10 backdrop-blur-xl border border-accent/20 p-4 rounded-xl shadow-2xl">
+                                          <p className="text-[10px] font-black uppercase tracking-tighter text-accent mb-2 font-mono">{payload[0].name}</p>
+                                          <p className="text-xs font-black text-white uppercase flex items-center justify-between gap-4">
+                                            <span className="text-gray-400">Count:</span>
+                                            <span>{payload[0].value}</span>
+                                          </p>
+                                        </div>
+                                      );
+                                    }
+                                    return null;
+                                  }}
+                                />
+                              </RechartsPieChart>
+                            </ResponsiveContainer>
+                          )}
+                          {selectedProject.chartType === 'radar' && (
+                            <ResponsiveContainer width="100%" height="100%">
+                              <RechartsRadarChart cx="50%" cy="50%" outerRadius="80%" data={selectedProject.chartData}>
+                                <PolarGrid stroke="#333" />
+                                <PolarAngleAxis dataKey="feature" tick={{ fill: '#666', fontSize: 10 }} />
+                                <Radar
+                                  name="Impact"
+                                  dataKey="weight"
+                                  stroke="#B89D77"
+                                  fill="#B89D77"
+                                  fillOpacity={0.6}
+                                />
+                                <Tooltip 
+                                  content={({ active, payload, label }) => {
+                                    if (active && payload && payload.length) {
+                                      return (
+                                        <div className="bg-bg-warm/10 backdrop-blur-xl border border-accent/20 p-4 rounded-xl shadow-2xl">
+                                          <p className="text-[10px] font-black uppercase tracking-tighter text-accent mb-1 font-mono">{label}</p>
+                                          <p className="text-xs font-black text-white uppercase">
+                                            Weight: <span className="text-accent">{payload[0].value}%</span>
+                                          </p>
+                                        </div>
+                                      );
+                                    }
+                                    return null;
+                                  }}
+                                />
+                              </RechartsRadarChart>
+                            </ResponsiveContainer>
+                          )}
+                          {!selectedProject.chartType && (
+                            <div className="w-full h-full flex flex-col justify-center items-center text-center p-8 border border-white/10 rounded-[2rem] bg-white/5">
+                               <Database size={40} className="text-accent mb-4 opacity-40" />
+                               <span className="text-xs font-mono text-gray-500 uppercase tracking-widest mb-2">Synthetic Telemetry Load</span>
+                               <div className="w-full h-1 bg-white/10 rounded-full overflow-hidden">
+                                  <motion.div 
+                                    animate={{ x: ['-100%', '100%'] }}
+                                    transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+                                    className="w-1/2 h-full bg-accent"
+                                  />
+                               </div>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-8 relative z-10">
+                          {selectedProject.metrics?.map(m => (
+                            <div key={m.label}>
+                              <div className="text-4xl font-extrabold tracking-tighter mb-1 text-white">{m.value}</div>
+                              <div className="text-[10px] font-bold uppercase tracking-widest text-gray-500 font-mono">{m.label}</div>
+                            </div>
+                          )) || (
+                            <>
+                              <div>
+                                <div className="text-4xl font-extrabold tracking-tighter mb-1 text-white">99.9%</div>
+                                <div className="text-[10px] font-bold uppercase tracking-widest text-gray-500 font-mono">Uptime</div>
+                              </div>
+                              <div>
+                                <div className="text-4xl font-extrabold tracking-tighter mb-1 text-white">40ms</div>
+                                <div className="text-[10px] font-bold uppercase tracking-widest text-gray-500 font-mono">Latency</div>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </section>
+
+                      <div className="p-8 border border-gray-200 rounded-[2.5rem] bg-white/50 backdrop-blur-sm">
+                        <h4 className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-6">System Architecture Summary</h4>
+                        <div className="space-y-4">
+                           <div className="flex justify-between items-center py-3 border-b border-gray-100">
+                             <span className="text-sm font-semibold text-gray-500">Security Tier</span>
+                             <span className="text-xs font-bold font-mono text-black">ENCRYPTED@REST</span>
+                           </div>
+                           <div className="flex justify-between items-center py-3 border-b border-gray-100">
+                             <span className="text-sm font-semibold text-gray-500">Data Lifecycle</span>
+                             <span className="text-xs font-bold font-mono text-black">ATOMIC_WRITES</span>
+                           </div>
+                           <div className="flex justify-between items-center py-3 border-b border-gray-100">
+                             <span className="text-sm font-semibold text-gray-500">Load Profile</span>
+                             <span className="text-xs font-bold font-mono text-black">AUTO_SCALING</span>
+                           </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

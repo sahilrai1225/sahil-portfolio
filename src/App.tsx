@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
 import { About } from './components/About';
+import { ExperienceSection } from './components/ExperienceSection';
 import { SkillVisualizer } from './components/SkillVisualizer';
 import { ProjectSection } from './components/ProjectSection';
 import { BlogSystem } from './components/BlogSystem';
@@ -46,6 +47,7 @@ export default function App() {
               <Hero />
               <div className="space-y-32">
                 <About />
+                <ExperienceSection />
                 <SkillVisualizer />
                 <ProjectSection />
                 <BlogSystem />

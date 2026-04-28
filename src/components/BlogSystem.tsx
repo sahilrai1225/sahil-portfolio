@@ -25,9 +25,9 @@ export const BlogSystem = () => {
 
           <button 
             onClick={() => setSelectedBlog(null)}
-            className="mb-12 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-accent transition-colors"
+            className="mb-12 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-accent transition-colors"
           >
-            <ArrowLeft size={14} /> Back to Library
+            <ArrowLeft size={14} /> Back to Blog Log
           </button>
 
           <header className="mb-12">
@@ -60,14 +60,14 @@ export const BlogSystem = () => {
       ) : (
         <>
           <div className="mb-16">
-            <span className="text-xs font-bold uppercase tracking-widest text-gray-400 mb-2 block">Insights & Research</span>
-            <h2 className="text-5xl font-bold tracking-tight text-gray-900 mb-4">Technical Discourse</h2>
-            <p className="text-gray-500 max-w-2xl">
-              Exploring deep learning paradigms, RAG optimization patterns, and the evolution of quantitative systems.
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-6 block">Intelligence Logs</span>
+            <h2 className="text-5xl font-black tracking-tighter text-ink leading-[1.1] uppercase mb-8">Selected <br/>Blogs.</h2>
+            <p className="text-gray-500 font-medium leading-relaxed max-w-2xl">
+              Exploring the convergence of system logic, architectural reliability, and the evolution of intelligence.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-10">
             {portfolioData.blogs.map((blog, idx) => (
               <motion.article
                 key={blog.id}
@@ -79,16 +79,16 @@ export const BlogSystem = () => {
                   setSelectedBlog(blog);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="group cursor-pointer p-8 rounded-3xl border border-gray-100 bg-white hover:border-black transition-all flex flex-col"
+                className="group cursor-pointer p-10 rounded-[3rem] border border-accent-soft/10 bg-white hover:border-accent hover:shadow-[0_40px_100px_-20px_rgba(184,157,119,0.15)] transition-all flex flex-col"
               >
-                <div className="flex items-center gap-3 text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-6">
-                   <BookOpen size={12} /> Research Notes
+                <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-accent mb-8">
+                   <BookOpen size={12} /> BLOG_LOG: {idx + 1}
                 </div>
-                <h3 className="text-xl font-bold tracking-tight mb-4 group-hover:text-black transition-colors">{blog.title}</h3>
-                <p className="text-sm text-gray-500 leading-relaxed mb-8 flex-grow">{blog.excerpt}</p>
-                <div className="flex justify-between items-center pt-6 border-t border-gray-50 mt-auto">
-                   <span className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{blog.readTime}</span>
-                   <span className="text-[10px] font-bold uppercase tracking-widest text-black group-hover:mr-2 transition-all">Read Insight →</span>
+                <h3 className="text-3xl font-black tracking-[-0.03em] text-ink leading-tight uppercase group-hover:text-accent transition-colors mb-6">{blog.title}</h3>
+                <p className="text-gray-500 font-medium leading-relaxed mb-10 flex-grow uppercase tracking-tight text-xs">{blog.excerpt}</p>
+                <div className="flex justify-between items-center pt-8 border-t border-accent-soft/10 mt-auto">
+                   <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">{blog.readTime}</span>
+                   <span className="text-[10px] font-black uppercase tracking-widest text-ink group-hover:mr-2 transition-all">Read Story →</span>
                 </div>
               </motion.article>
             ))}
