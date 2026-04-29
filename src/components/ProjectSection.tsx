@@ -10,11 +10,11 @@ import lstmImg from "../assets/lstm.png";
 import securityImg from "../assets/security.png";
 
 // ✅ IMAGE MAP (AUTO ASSIGN BASED ON TITLE)
-const imageMap: Record<string, string> = {
-  "Telecom Analytics Engine": telecomImg,
-  "Production RAG System": ragImg,
-  "LSTM Forecasting Engine": lstmImg,
-  "Security Vector Shield": securityImg,
+const imageMap = {
+  "Telecom Analytics Engine": "/telecom.png",
+  "Production RAG System": "/rag.png",
+  "LSTM Forecasting Engine": "/lstm.png",
+  "Security Vector Shield": "/security.png",
 };
 
 export const ProjectSection = () => {
