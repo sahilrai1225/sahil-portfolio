@@ -3,11 +3,7 @@ import { useState, useRef } from "react";
 import { portfolioData, Project } from "../data/portfolio";
 import { Database, Brain, Code2, LineChart, Code } from "lucide-react";
 
-// ✅ YOUR LOCAL IMAGES
-import telecomImg from "../assets/telecom.png";
-import ragImg from "../assets/rag.png";
-import lstmImg from "../assets/lstm.png";
-import securityImg from "../assets/security.png";
+
 
 // ✅ IMAGE MAP (AUTO ASSIGN BASED ON TITLE)
 const imageMap = {
