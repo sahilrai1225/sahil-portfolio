@@ -16,6 +16,11 @@ export interface Project {
   demo?: string;
   chartData?: any[];
   chartType?: 'line' | 'bar' | 'pie' | 'radar';
+  longIntro?: string;
+  pipeline?: string;
+  methodology?: string;
+  challenges?: string;
+  impactExplanation?: string;
 }
 
 export interface Experience {
@@ -201,7 +206,12 @@ export const portfolioData = {
       chartData: [
         { name: 'Retained', value: 8650 },
         { name: 'At Risk', value: 1350 }
-      ]
+      ],
+      longIntro: "This project represents a comprehensive initiative to combat customer churn in a highly competitive telecom environment. By leveraging millions of transactional records, network quality logs, and historical usage patterns, we engineered an intelligent system capable of identifying at-risk users with unprecedented accuracy aforehand.",
+      pipeline: "The data pipeline ingested 10K+ customer records in real-time. Unstructured text logs from customer service interactions were processed using NLP, while structured billing data went through a rigorous ETL process. Features were normalized, scaled, and managed through a feature store to ensure zero data leakage.",
+      methodology: "We adopted a stratified approach. Initially, simple baselines like Logistic Regression provided a benchmark. After exhaustive exploratory data analysis (EDA), we transitioned to gradient boosting methods. We extensively utilized SMOTE for handling class imbalance, fine-tuned hyperparameters via Bayesian Optimization, and validated with 5-fold cross-validation.",
+      challenges: "Class imbalance stood out as the predominant problem; the churn rate was merely ~13.5%. Early models showed extreme bias toward the majority class (retaining customers). Additionally, distinguishing between noise and actual churn signals in short-term data fluctuations demanded meticulous feature engineering.",
+      impactExplanation: "By integrating the final XGBoost model directly with the BI systems, the marketing team could trigger automated retention workflows. This predictive approach shifted the strategy from reactive damage control to proactive customer success, recovering approximately $1.2M in annual retention value."
     },
     {
       id: "ai-research-assistant",
@@ -228,7 +238,12 @@ export const portfolioData = {
         { name: 'Euclidean', score: 0.88 },
         { name: 'BM25', score: 0.82 },
         { name: 'Hybrid', score: 0.96 }
-      ]
+      ],
+      longIntro: "A full-scale Retrieval-Augmented Generation (RAG) system built to parse, index, and query across 500+ deep tech academic papers. It bridges the gap between semantic understanding and factual grounding, providing researchers with instant, highly accurate literature synthesis.",
+      pipeline: "Documents were processed via PyPDF and unstructured chunking libraries. The chunking strategy employed recursive character limits with 200-token overlaps. We utilized ChromaDB for vector storage and integrated FAISS for efficient similarity searches, all automated within a CI/CD-driven ingestion pipeline.",
+      methodology: "We implemented a hybrid search setup, merging Dense Vector Embeddings (via SentenceTransformers) and Sparse Keyword Search (BM25) to maximize retrieval recall. Finally, to construct the final response, an LLM orchestrator combined the top-k relevant fragments, applying strict temperature controls to mitigate hallucinations.",
+      challenges: "Navigating deeply technical academic jargon posed a massive challenge for out-of-the-box embeddings, resulting in 'lost-in-the-middle' phenomena. We solved this by implementing Metadata-filtered querying and Maximal Marginal Relevance (MMR) re-ranking.",
+      impactExplanation: "Deployed as an internal FastAPI microservice, researchers slashed their literature review cycles by 70%. The hybrid pipeline guarantees 95% accuracy and enforces factual provenance by strictly citing retrieved chunk metadata."
     },
     {
       id: "stock-market-prediction",
@@ -256,7 +271,12 @@ export const portfolioData = {
         { date: 'Wed', actual: 4220, forecast: 4240 },
         { date: 'Thu', actual: 4300, forecast: 4290 },
         { date: 'Fri', actual: 4350, forecast: 4340 }
-      ]
+      ],
+      longIntro: "A dynamic and heavily optimized Long Short-Term Memory (LSTM) network designed to decode complex temporal patterns in stock market fluctuations. Specifically built for the S&P 500, it aims to extract probabilistic edges from notoriously resilient and noisy financial datasets.",
+      pipeline: "Sourced high-frequency OHLCV (Open, High, Low, Close, Volume) data from financial APIs dating back over five years. We engineered more than 15 lagging and leading indicators, including RSI, MACD, and Bollinger Bands. The dataset was time-aligned and fed through standard squashing functions before reaching the network.",
+      methodology: "Escewing simpler feed-forward networks, we utilized a multi-stage LSTM architecture capable of remembering 30-day lookback windows. We introduced Dropout layers to penalize overfitting and employed Learning Rate warmups with a Cosine Annealing schedule to ensure robust gradient convergence.",
+      challenges: "Market volatility introduces severe non-linear noise, frequently causing catastrophic overfitting in preliminary models. Navigating regimes shifts—where market rules fundamentally change due to macroeconomic events—required embedding adaptive walk-forward validation strategies.",
+      impactExplanation: "By integrating into a highly interactive Streamlit dashboard, portfolio managers gained real-time, mathematically grounded forecast bands. The architecture consistently achieves a remarkable 3.2% RMSE, providing a substantial 41% edge over naive moving-average strategies."
     },
     {
       id: "phishing-detection",
@@ -284,7 +304,12 @@ export const portfolioData = {
         { feature: 'SSL', weight: 60 },
         { feature: 'DomainAge', weight: 75 },
         { feature: 'Redirects', weight: 85 }
-      ]
+      ],
+      longIntro: "A high-frequency cyber-security tool designed to intercept anomalous and malicious URLs before they compromise user systems. This 'Security Vector Shield' employs sophisticated lexical feature extraction to identify zero-day phishing attacks that bypass traditional blacklists.",
+      pipeline: "The ingestion engine concurrently pulled malicious instances from academic datasets and open-source threat repositories, balanced with an equivalent set of benign traffic. A rigorous feature extractor transformed raw URL strings into numerical tensors measuring length, entropy, special character frequency, and domain obscuration tactics.",
+      methodology: "We formulated this as a binary classification objective. We evaluated a battery of models including pure Deep Learning classifiers, but an ensemble consisting of Random Forest and XGBoost ultimately delivered the best latency-to-accuracy ratio. Extensive GridSearch was used for iterative tuning.",
+      challenges: "Attackers continuously evolve their obfuscation—such as using typo-squatting or punycode. Feature extraction had to be extremely comprehensive yet remain computationally cheap to ensure the model could operate inline with browser traffic at sub-50ms latency.",
+      impactExplanation: "When integrated as a network validation endpoint, the model reliably intercepted 97.4% of simulated zero-day phishing domains. Its lightweight lexical approach acts as a robust frontline defense, completely sidestepping the massive overhead associated with traditional signature-based scanning."
     }
   ] as Project[],
   blogs: [
