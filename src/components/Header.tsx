@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { portfolioData } from '../data/portfolio';
 import { cn } from '../lib/utils';
 import { Github, Linkedin, Mail, ExternalLink, Menu, X } from 'lucide-react';
@@ -8,78 +8,83 @@ export const Header = ({ recruiterMode, setRecruiterMode }: { recruiterMode: boo
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-bg-warm/60 backdrop-blur-xl border-b border-accent-soft/20">
-      <div className="mx-auto max-w-7xl px-6 h-20 flex items-center justify-between">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-black-pure/80 backdrop-blur-md border-b border-grey-border">
+      <div className="mx-auto max-w-7xl px-6 h-24 flex items-center justify-between">
         <motion.div 
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="flex items-center gap-3 font-semibold text-lg hover:opacity-70 transition-opacity cursor-pointer text-ink"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="flex flex-col cursor-pointer group"
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
-          <div className="w-10 h-10 bg-accent rounded-full flex items-center justify-center text-bg-warm font-black italic shadow-lg shadow-accent/20">S</div>
-          <div className="flex flex-col">
-            <span className="tracking-tighter text-base font-black leading-none">SAHIL RAI</span>
-            <span className="text-[10px] font-extrabold text-accent uppercase tracking-widest mt-1">{portfolioData.personal.title}</span>
-          </div>
+          <h1 className="text-[10px] tracking-[0.4em] font-semibold text-grey-text uppercase mb-1 drop-shadow-sm">Portfolio // 2024</h1>
+          <div className="text-2xl font-serif italic text-white group-hover:text-accent transition-colors">Sahil Rai</div>
         </motion.div>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-10">
-          <div className="flex bg-accent/5 p-1 rounded-full items-center border border-accent/10">
+        <nav className="hidden md:flex items-center gap-12">
+          <div className="flex bg-grey-dark p-1 rounded-sm items-center border border-grey-border-light/30">
             <button 
               onClick={() => setRecruiterMode(false)}
               className={cn(
-                "text-[9px] font-extrabold uppercase tracking-widest px-5 py-1.5 rounded-full transition-all",
-                !recruiterMode ? "bg-white text-ink shadow-sm" : "bg-transparent text-gray-400 hover:text-ink"
+                "text-[9px] font-bold uppercase tracking-widest px-6 py-1.5 rounded-sm transition-all",
+                !recruiterMode ? "bg-white text-black-pure" : "bg-transparent text-grey-text hover:text-white"
               )}
             >
-              CRAFT
+              Selected Works
             </button>
             <button 
               onClick={() => setRecruiterMode(true)}
               className={cn(
-                "text-[9px] font-extrabold uppercase tracking-widest px-5 py-1.5 rounded-full transition-all",
-                recruiterMode ? "bg-white text-ink shadow-sm" : "bg-transparent text-gray-400 hover:text-ink"
+                "text-[9px] font-bold uppercase tracking-widest px-6 py-1.5 rounded-sm transition-all",
+                recruiterMode ? "bg-white text-black-pure" : "bg-transparent text-grey-text hover:text-white"
               )}
             >
-              DATA
+              Archival
             </button>
           </div>
-          <a href="#experience" className="text-[11px] font-extrabold text-gray-500 uppercase tracking-widest hover:text-accent transition-colors">Path</a>
-          <a href="#projects" className="text-[11px] font-extrabold text-gray-500 uppercase tracking-widest hover:text-accent transition-colors">Case Studies</a>
-          <a href="#skills" className="text-[11px] font-extrabold text-gray-500 uppercase tracking-widest hover:text-accent transition-colors">Stack</a>
-          <div className="flex items-center gap-4 border-l border-accent/10 ml-2 pl-6">
-            <a href={`mailto:${portfolioData.personal.email}`} className="bg-accent text-bg-warm px-6 py-2.5 rounded-full text-[10px] font-extrabold uppercase tracking-widest shadow-xl shadow-accent/20 hover:scale-105 transition-all">Connect</a>
+          
+          <div className="flex space-x-10 text-[10px] tracking-[0.2em] uppercase text-grey-text-light">
+            <a href="#about" className="hover:text-white transition-colors">About</a>
+            <a href="#projects" className="hover:text-white transition-colors">Case Studies</a>
+            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
+          </div>
+
+          <div className="flex items-center gap-6 border-l border-grey-border-light/20 ml-2 pl-8">
+             <a href={`mailto:${portfolioData.personal.email}`} className="sophisticated-button !py-2.5 !px-6">
+              Connect
+             </a>
           </div>
         </nav>
 
         {/* Mobile menu trigger */}
-        <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        <button className="md:hidden text-white" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
 
       {/* Mobile nav */}
-      {isMenuOpen && (
-        <motion.div 
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="md:hidden bg-white border-b border-gray-100 p-6 flex flex-col gap-4"
-        >
-           <button 
-            onClick={() => { setRecruiterMode(!recruiterMode); setIsMenuOpen(false); }}
-            className={cn(
-              "text-xs font-bold uppercase tracking-widest px-3 py-2 rounded-full transition-all border text-center",
-              recruiterMode ? "bg-black text-white border-black" : "bg-transparent text-gray-500 border-gray-200"
-            )}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-black-soft border-b border-grey-border overflow-hidden"
           >
-            {recruiterMode ? "Switch to Product Mode" : "Switch to Recruiter Mode"}
-          </button>
-          <a href="#projects" className="text-lg font-medium" onClick={() => setIsMenuOpen(false)}>Projects</a>
-          <a href="#about" className="text-lg font-medium" onClick={() => setIsMenuOpen(false)}>About</a>
-          <a href="#blog" className="text-lg font-medium" onClick={() => setIsMenuOpen(false)}>Blogs</a>
-        </motion.div>
-      )}
+             <div className="p-8 flex flex-col gap-6">
+                <button 
+                  onClick={() => { setRecruiterMode(!recruiterMode); setIsMenuOpen(false); }}
+                  className="text-[10px] font-bold uppercase tracking-widest py-3 border border-grey-border-light text-center text-white"
+                >
+                  {recruiterMode ? "Product Overview" : "Archival Insight"}
+                </button>
+                <a href="#projects" className="text-2xl font-serif italic text-white" onClick={() => setIsMenuOpen(false)}>Work</a>
+                <a href="#about" className="text-2xl font-serif italic text-white" onClick={() => setIsMenuOpen(false)}>About</a>
+                <a href="#contact" className="text-2xl font-serif italic text-white" onClick={() => setIsMenuOpen(false)}>Contact</a>
+             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

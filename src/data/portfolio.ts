@@ -69,6 +69,7 @@ export interface PortfolioData {
   };
   experience: Experience[];
   skills: SkillCategory[];
+  coreResearch: { name: string; value: number }[];
   softSkills: { name: string; value: number }[];
   projects: Project[];
   blogs: BlogPost[];
@@ -85,7 +86,7 @@ export const portfolioData = {
     title: "Data Scientist & ML/AI Engineer",
     subTitle: "Building resilient systems at the intersection of data logic and scale.",
     description: "I’m a data-driven AI/ML engineer focused on building production-grade intelligent systems that deliver measurable business impact. My work spans the full lifecycle—from data exploration and statistical validation to model deployment and scalable AI architectures.",
-    image: "/sketch-profile.jpg",
+    image: "https://drive.google.com/uc?export=download&id=1WpQeyPHVcyt8J086-bOgyYu0LoC4-2eE",
     cvOptions: [
       { 
         id: 'ai-ml', 
@@ -162,8 +163,14 @@ export const portfolioData = {
     { name: "NLP / Generative AI", value: 92, tools: ["LangChain", "HuggingFace", "RAG", "LLM Fine-tuning", "FAISS", "Word Embeddings"] },
     { name: "Data Engineering", value: 94, tools: ["Pandas", "NumPy", "SQL", "ETL Pipelines", "Feature Engineering", "Data Profiling"] },
     { name: "BI & Visualization", value: 90, tools: ["Power BI", "DAX", "SQL Tuning", "Star Schema", "Tableau", "Matplotlib"] },
-    { name: "Core Skills", value: 88, tools: ["A/B Testing", "Hypothesis Testing", "Structural Integrity", "System Scalability"] }
+    { name: "Core Skills", value: 88, tools: ["A/B Testing", "Hypothesis Testing", "Statistical Validation", "Linear Algebra", "Git/Version Control", "System Scalability"] }
   ] as SkillCategory[],
+  coreResearch: [
+    { name: "Algorithm Optimization", value: 94 },
+    { name: "System Design", value: 91 },
+    { name: "Production Deployment", value: 89 },
+    { name: "Statistical Inference", value: 92 }
+  ],
   softSkills: [
     { name: "Decision Logic", value: 95 },
     { name: "Quant Reasoning", value: 92 },

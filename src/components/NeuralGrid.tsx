@@ -44,7 +44,7 @@ export const NeuralGrid = () => {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillStyle = 'rgba(165, 141, 99, 0.2)';
         ctx.fill();
       }
     }
@@ -73,7 +73,7 @@ export const NeuralGrid = () => {
             ctx.beginPath();
             ctx.moveTo(particles[i].x, particles[i].y);
             ctx.lineTo(particles[j].x, particles[j].y);
-            ctx.strokeStyle = `rgba(0, 0, 0, ${0.03 * (1 - distance / maxDistance)})`;
+            ctx.strokeStyle = `rgba(165, 141, 99, ${0.1 * (1 - distance / maxDistance)})`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
           }
@@ -82,9 +82,9 @@ export const NeuralGrid = () => {
     };
 
     const drawGrid = () => {
-      const spacing = 60;
+      const spacing = 100;
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(0, 0, 0, 0.02)';
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.03)';
       ctx.lineWidth = 0.5;
 
       for (let x = 0; x <= width; x += spacing) {

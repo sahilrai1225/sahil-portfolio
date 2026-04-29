@@ -17,136 +17,124 @@ export const Hero = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setTitleIdx((prev) => (prev + 1) % titles.length);
-    }, 3000);
+    }, 3500);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="min-h-[85vh] flex flex-col justify-center pt-40 pb-24">
-      <div className="grid lg:grid-cols-2 gap-20 items-center">
-        <div className="max-w-2xl">
+    <section className="min-h-[85vh] flex flex-col justify-center pt-52 pb-24">
+      <div className="grid lg:grid-cols-12 gap-16 items-center">
+        <div className="lg:col-span-7">
           <motion.div
              initial={{ opacity: 0, y: 10 }}
              animate={{ opacity: 1, y: 0 }}
              transition={{ delay: 0.1 }}
           >
-            <span className="inline-flex items-center gap-2 bg-accent/10 border border-accent/20 text-accent text-[9px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full mb-10">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+            <span className="text-[10px] uppercase tracking-[0.3em] text-accent mb-8 block drop-shadow-sm font-medium">
               {portfolioData.personal.title}
             </span>
           </motion.div>
 
-          <div className="h-[140px] md:h-[200px] mb-10">
+          <div className="h-[180px] md:h-[260px] mb-12">
             <AnimatePresence mode="wait">
-              <motion.h1 
+              <motion.h2 
                 key={titles[titleIdx]}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -15 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                className="text-6xl md:text-[5.5rem] font-black tracking-[-0.04em] text-ink leading-[0.95] uppercase"
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                className="text-6xl md:text-8xl font-serif leading-[1.1] text-white"
               >
                 {titles[titleIdx].split(' ').map((word, i) => (
-                  <span key={i} className={i === 1 ? "text-accent underline decoration-accent/20 underline-offset-8" : ""}>{word} </span>
+                  <span key={i} className={i % 2 !== 0 ? "italic opacity-80 underline underline-offset-[12px] decoration-1 decoration-grey-border-light" : ""}>{word} </span>
                 ))}
-              </motion.h1>
+              </motion.h2>
             </AnimatePresence>
           </div>
 
           <motion.p 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="text-lg md:text-xl text-gray-500 max-w-xl leading-relaxed mb-12 font-medium"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="text-grey-text max-w-md text-sm md:text-base leading-relaxed mb-12 font-sans"
           >
-            I’m a data-driven <span className="text-ink font-bold">AI/ML engineer</span> focused on building production-grade intelligent systems that deliver measurable business impact.
+            Advancing the state of <span className="text-white-off font-medium">AI/ML engineering</span> through minimalist architectural principles and rigorous quantitative synthesis.
           </motion.p>
 
           <motion.div 
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="flex flex-wrap gap-5"
+            transition={{ delay: 0.5 }}
+            className="flex items-center space-x-8"
           >
-            <a href="#projects" className="bg-accent text-bg-warm px-8 py-4 rounded-full flex items-center gap-3 font-extrabold uppercase tracking-widest text-[10px] hover:shadow-2xl hover:shadow-accent/30 transition-all group">
-              Explore The Systems <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            <a href="#projects" className="sophisticated-button">
+              View Work
             </a>
-            <a href="#blog" className="bg-white border border-accent-soft/30 text-gray-500 px-8 py-4 rounded-full flex items-center gap-3 font-extrabold uppercase tracking-widest text-[10px] hover:border-accent hover:text-accent transition-all shadow-sm">
-              <FileText size={16} /> Selected Blogs
-            </a>
+            <div className="h-[1px] w-20 bg-grey-border-light"></div>
+            <span className="text-[10px] uppercase tracking-widest text-grey-text-light font-medium">Available for Research</span>
           </motion.div>
         </div>
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
+          initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.8 }}
-          className="relative hidden lg:block"
+          transition={{ delay: 0.6, duration: 1 }}
+          className="lg:col-span-5 hidden lg:block"
         >
-          {/* Dashboard Preview Mockup */}
-          <div className="bg-white rounded-[3rem] p-8 shadow-[0_40px_100px_-20px_rgba(184,157,119,0.2)] border border-accent/10 relative z-10">
-             <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-50">
-               <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full bg-gray-100" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-gray-100" />
-                  <div className="w-2.5 h-2.5 rounded-full bg-gray-100" />
-               </div>
-               <div className="text-[9px] font-bold text-gray-400 uppercase tracking-widest">System Health: 99.9%</div>
-             </div>
-             <div className="grid grid-cols-2 gap-4 mb-8">
-                <div className="h-24 bg-accent/5 rounded-2xl border border-accent/10 p-4 flex flex-col justify-between">
-                   <div className="text-[10px] font-bold text-accent uppercase tracking-widest">Precision</div>
-                   <div className="text-3xl font-black text-ink">95.4%</div>
-                </div>
-                <div className="h-24 bg-ink rounded-2xl p-4 flex flex-col justify-between text-white">
-                   <div className="text-[10px] font-bold text-gray-500 uppercase tracking-widest">Lat (p99)</div>
-                   <div className="text-3xl font-black">14ms</div>
-                </div>
-             </div>
-             <div className="space-y-3">
-                <div className="h-2 w-full bg-gray-50 rounded-full overflow-hidden">
-                   <div className="w-3/4 h-full bg-accent rounded-full" />
-                </div>
-                <div className="h-2 w-full bg-gray-50 rounded-full overflow-hidden">
-                   <div className="w-1/2 h-full bg-accent rounded-full opacity-60" />
-                </div>
-                <div className="h-2 w-full bg-gray-50 rounded-full overflow-hidden">
-                   <div className="w-2/3 h-full bg-accent rounded-full opacity-30" />
-                </div>
-             </div>
+          {/* Hero Illustration */}
+          <div className="relative group">
+            <div className="aspect-square bg-grey-dark/20 backdrop-blur-sm border border-grey-border overflow-hidden relative">
+              <img 
+                src={portfolioData.personal.image} 
+                alt="Sahil Rai - Machine Learning Workflow"
+                className="w-full h-full object-cover grayscale opacity-80 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-700"
+                referrerPolicy="no-referrer"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black-pure/40 to-transparent pointer-events-none" />
+              
+              {/* Technical Overlays */}
+              <div className="absolute top-6 left-6 flex gap-2">
+                 <div className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                 <div className="w-1.5 h-1.5 rounded-full bg-grey-border-light" />
+              </div>
+              <div className="absolute bottom-6 right-6 text-[8px] font-mono text-grey-text-light uppercase tracking-widest bg-black-pure/60 px-2 py-1 backdrop-blur-md border border-grey-border">
+                System_Entity_Profile // 0x5F1A
+              </div>
+            </div>
+            
+            {/* Decorative frame */}
+            <div className="absolute -top-4 -right-4 w-32 h-32 border-r border-t border-accent/20 -z-10 group-hover:-top-6 group-hover:-right-6 transition-all duration-700" />
+            <div className="absolute -bottom-4 -left-4 w-32 h-32 border-l border-b border-accent/20 -z-10 group-hover:-bottom-6 group-hover:-left-6 transition-all duration-700" />
           </div>
-          
-          {/* Decorative shapes behind */}
-          <div className="absolute -top-10 -right-10 w-64 h-64 bg-accent/10 rounded-full blur-3xl -z-10" />
-          <div className="absolute -bottom-20 -left-20 w-80 h-80 bg-accent/5 rounded-full blur-3xl -z-10" />
         </motion.div>
       </div>
 
-      {/* Hero Stats */}
+      {/* Hero Stats - Updated for Sophisticated theme */}
       <motion.div 
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ delay: 0.6 }}
-        className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-20 pt-20 border-t border-accent-soft/20 mt-32"
+        transition={{ delay: 0.7 }}
+        className="grid grid-cols-2 lg:grid-cols-4 gap-12 pt-24 border-t border-grey-border mt-32"
       >
-        <div>
-          <div className="text-5xl font-black tracking-[-0.04em] mb-2 text-accent uppercase">05+</div>
-          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 font-mono">Core Systems Built</div>
+        <div className="flex flex-col">
+          <span className="text-[9px] uppercase tracking-widest text-grey-text-light mb-3">Core Research</span>
+          <div className="text-4xl font-serif text-white-off">05+ <span className="text-xs uppercase font-sans tracking-tighter text-grey-text">Systems</span></div>
         </div>
-        <div>
-          <div className="text-5xl font-black tracking-[-0.04em] mb-2 text-ink uppercase">95%</div>
-          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 font-mono">Inference Precision</div>
+        <div className="flex flex-col">
+          <span className="text-[9px] uppercase tracking-widest text-grey-text-light mb-3">Model Accuracy</span>
+          <div className="text-4xl font-serif text-accent">95% <span className="text-xs uppercase font-sans tracking-tighter text-grey-text">Precision</span></div>
         </div>
-        <div>
-          <div className="text-5xl font-black tracking-[-0.04em] mb-2 text-accent uppercase">12k+</div>
-          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 font-mono">Dataset Samples</div>
+        <div className="flex flex-col">
+          <span className="text-[9px] uppercase tracking-widest text-grey-text-light mb-3">Data Synthesis</span>
+          <div className="text-4xl font-serif text-white-off">12k+ <span className="text-xs uppercase font-sans tracking-tighter text-grey-text">Samples</span></div>
         </div>
-        <div>
-          <div className="text-5xl font-black tracking-[-0.04em] mb-2 text-ink uppercase">2.4k</div>
-          <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 font-mono">Research Code Hours</div>
+        <div className="flex flex-col">
+          <span className="text-[9px] uppercase tracking-widest text-grey-text-light mb-3">Quantitative</span>
+          <div className="text-4xl font-serif text-accent">2.4k <span className="text-xs uppercase font-sans tracking-tighter text-grey-text">Hours</span></div>
         </div>
       </motion.div>
     </section>
   );
 };
+;

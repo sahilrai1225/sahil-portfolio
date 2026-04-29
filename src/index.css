@@ -1,28 +1,50 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", ui-serif, Georgia, serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   
-  --color-accent: #B89D77;
-  --color-ink: #1C1C1C;
-  --color-bg-warm: #F6F4EF;
-  --color-card-bg: #FFFFFF;
-  --color-accent-soft: #D4C3AC;
+  --color-accent: #a58d63;
+  --color-accent-dark: #8e774f;
+  --color-accent-soft: rgba(165, 141, 99, 0.1);
+  --color-accent-light: rgba(165, 141, 99, 0.4);
+  --color-error: #8b0000;
+  
+  --color-black-pure: #050505;
+  --color-black-soft: #0a0a0a;
+  --color-grey-dark: #1a1a1a;
+  --color-grey-border: #111;
+  --color-grey-border-light: #333;
+  --color-grey-text: #888;
+  --color-grey-text-light: #666;
+  --color-white-off: #e5e5e5;
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
-    background-color: var(--color-bg-warm);
-    color: var(--color-ink);
+    background-color: var(--color-black-pure);
+    color: var(--color-white-off);
+  }
+
+  body {
+    @apply antialiased selection:bg-accent selection:text-black-pure;
   }
 }
 
 @layer components {
   .neural-grid-css {
-    background-image: radial-gradient(#E5E7EB 1px, transparent 1px);
-    background-size: 24px 24px;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .sophisticated-card {
+    @apply bg-black-pure border border-grey-border hover:border-grey-border-light transition-all duration-300;
+  }
+
+  .sophisticated-button {
+    @apply px-8 py-3 bg-black-pure border border-grey-border text-[11px] uppercase tracking-[0.2em] text-white-off hover:bg-accent-dark hover:text-white hover:border-accent-dark transition-all duration-500 font-sans;
   }
 }

@@ -14,44 +14,52 @@ export const BlogSystem = () => {
   });
 
   return (
-    <section id="blog" className="py-24">
+    <section id="blog" className="py-32 border-t border-grey-border">
       {selectedBlog ? (
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-4xl mx-auto px-6">
           {/* Progress Bar */}
           <motion.div 
-            className="fixed top-16 left-0 right-0 h-1 bg-accent z-50 origin-left"
+            className="fixed top-0 left-0 right-0 h-[1px] bg-accent z-[100] origin-left"
             style={{ scaleX }}
           />
 
           <button 
             onClick={() => setSelectedBlog(null)}
-            className="mb-12 flex items-center gap-2 text-xs font-black uppercase tracking-widest text-gray-400 hover:text-accent transition-colors"
+            className="mb-16 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.2em] text-grey-text-light hover:text-accent transition-colors font-mono"
           >
-            <ArrowLeft size={14} /> Back to Blog Log
+            <div className="w-8 h-px bg-grey-border" /> LOG_RECOVERY [BACK]
           </button>
 
-          <header className="mb-12">
-            <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-accent mb-4 font-mono">
-              <Calendar size={14} /> {selectedBlog.date} • <Clock size={14} /> {selectedBlog.readTime}
+          <header className="mb-20">
+            <div className="flex items-center gap-6 text-[10px] font-medium uppercase tracking-[0.3em] text-accent mb-8 font-mono">
+              <span>{selectedBlog.date}</span>
+              <span className="w-1 h-1 rounded-full bg-grey-border" />
+              <span>{selectedBlog.readTime}</span>
             </div>
-            <h1 className="text-5xl font-extrabold tracking-tight mb-8 uppercase leading-tight">{selectedBlog.title}</h1>
-            <p className="text-xl text-gray-500 leading-relaxed italic border-l-4 border-accent pl-6">
+            <h1 className="text-5xl md:text-8xl font-serif text-white leading-[1.05] mb-12">{selectedBlog.title}</h1>
+            <p className="text-xl md:text-2xl text-grey-text font-serif italic border-l border-accent/40 pl-10 py-2">
               {selectedBlog.excerpt}
             </p>
           </header>
 
-          <div className="prose prose-slate lg:prose-lg max-w-none prose-headings:tracking-tight prose-headings:font-bold prose-p:text-gray-600 prose-p:leading-relaxed">
+          <div className="prose prose-invert max-w-none 
+            prose-headings:font-serif prose-headings:font-normal prose-headings:italic
+            prose-p:text-grey-text prose-p:font-sans prose-p:leading-relaxed prose-p:text-lg
+            prose-strong:text-white-off prose-strong:font-semibold
+            prose-blockquote:border-accent prose-blockquote:bg-grey-dark/20 prose-blockquote:p-8
+            prose-code:text-accent prose-code:bg-black-pure prose-code:px-2 prose-code:py-0.5 prose-code:rounded
+          ">
             <ReactMarkdown>{selectedBlog.content}</ReactMarkdown>
-            <p className="text-gray-500 mt-12">
-               This is a premium research article summarizing deep technical insights in modern AI architectures. Sahil Rai explores the balance between computational cost and model precision in real-time prediction environments.
-            </p>
-            <div className="p-8 bg-gray-50 rounded-2xl border border-gray-100 mt-12">
-              <h4 className="text-sm font-bold uppercase tracking-widest mb-4">The Author</h4>
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-black rounded-full text-white flex items-center justify-center font-bold italic">SR</div>
+            <div className="mt-24 p-12 bg-black-pure border border-grey-border relative overflow-hidden group">
+              <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity">
+                <BookOpen size={150} className="text-white" />
+              </div>
+              <h4 className="text-[10px] font-medium uppercase tracking-widest text-grey-text-light mb-8 font-mono">Principal Investigator</h4>
+              <div className="flex items-center gap-6 relative z-10">
+                <div className="w-16 h-16 bg-grey-dark border border-grey-border text-accent flex items-center justify-center font-serif italic text-2xl">SR</div>
                 <div>
-                  <div className="font-bold">Sahil Rai</div>
-                  <div className="text-xs text-gray-500">AI/ML Engineer & Researcher</div>
+                  <div className="text-lg font-serif italic text-white-off">Sahil Rai</div>
+                  <div className="text-[10px] font-medium uppercase tracking-widest text-accent">AI/ML Architect & Research Lead</div>
                 </div>
               </div>
             </div>
@@ -59,15 +67,15 @@ export const BlogSystem = () => {
         </div>
       ) : (
         <>
-          <div className="mb-16">
-            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-accent mb-6 block">Intelligence Logs</span>
-            <h2 className="text-5xl font-black tracking-tighter text-ink leading-[1.1] uppercase mb-8">Selected <br/>Blogs.</h2>
-            <p className="text-gray-500 font-medium leading-relaxed max-w-2xl">
-              Exploring the convergence of system logic, architectural reliability, and the evolution of intelligence.
+          <div className="mb-24 px-6">
+            <span className="text-[10px] font-medium uppercase tracking-[0.4em] text-accent mb-8 block drop-shadow-sm font-sans">Theoretical Explorations</span>
+            <h2 className="text-5xl md:text-7xl font-serif leading-[1.1] text-white">Selected <br/><span className="italic opacity-80 underline underline-offset-8 decoration-1 decoration-grey-border-light">Intel Logs.</span></h2>
+            <p className="text-grey-text font-sans leading-relaxed max-w-md mt-12">
+              Critical analysis of the convergence between machine intelligence, system reliability, and synthetic cognitive architectures.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-10">
+          <div className="grid md:grid-cols-2 gap-px bg-grey-border border border-grey-border">
             {portfolioData.blogs.map((blog, idx) => (
               <motion.article
                 key={blog.id}
@@ -79,16 +87,19 @@ export const BlogSystem = () => {
                   setSelectedBlog(blog);
                   window.scrollTo({ top: 0, behavior: 'smooth' });
                 }}
-                className="group cursor-pointer p-10 rounded-[3rem] border border-accent-soft/10 bg-white hover:border-accent hover:shadow-[0_40px_100px_-20px_rgba(184,157,119,0.15)] transition-all flex flex-col"
+                className="group cursor-pointer p-12 bg-black-pure hover:bg-black-soft transition-all flex flex-col h-full"
               >
-                <div className="flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-accent mb-8">
-                   <BookOpen size={12} /> BLOG_LOG: {idx + 1}
+                <div className="flex items-center gap-4 text-[9px] font-medium uppercase tracking-[0.2em] text-accent mb-10 font-mono">
+                   <div className="w-2 h-2 rounded-full border border-accent/40 flex items-center justify-center">
+                     <div className="w-0.5 h-0.5 bg-accent rounded-full" />
+                   </div>
+                   BLOG_ENTITY_0{idx + 1}
                 </div>
-                <h3 className="text-3xl font-black tracking-[-0.03em] text-ink leading-tight uppercase group-hover:text-accent transition-colors mb-6">{blog.title}</h3>
-                <p className="text-gray-500 font-medium leading-relaxed mb-10 flex-grow uppercase tracking-tight text-xs">{blog.excerpt}</p>
-                <div className="flex justify-between items-center pt-8 border-t border-accent-soft/10 mt-auto">
-                   <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">{blog.readTime}</span>
-                   <span className="text-[10px] font-black uppercase tracking-widest text-ink group-hover:mr-2 transition-all">Read Story →</span>
+                <h3 className="text-4xl font-serif italic text-white-off leading-tight group-hover:text-white transition-colors mb-8">{blog.title}</h3>
+                <p className="text-grey-text font-sans leading-relaxed mb-12 flex-grow text-sm line-clamp-3">{blog.excerpt}</p>
+                <div className="flex justify-between items-center pt-10 border-t border-grey-border-light/10 mt-auto">
+                   <span className="text-[10px] font-medium uppercase tracking-widest text-grey-text-light font-mono">{blog.readTime}</span>
+                   <span className="text-[11px] font-medium text-white-off underline underline-offset-4 decoration-accent/40 group-hover:text-accent group-hover:decoration-accent transition-all">Read Manuscript</span>
                 </div>
               </motion.article>
             ))}

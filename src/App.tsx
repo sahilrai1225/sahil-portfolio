@@ -20,11 +20,11 @@ export default function App() {
   const [recruiterMode, setRecruiterMode] = useState(false);
 
   return (
-    <div className="relative font-sans text-slate-900 bg-white selection:bg-black selection:text-white">
+    <div className="relative font-sans text-white-off bg-black-pure selection:bg-accent selection:text-black-pure min-h-screen">
       <NeuralGrid />
       <Header recruiterMode={recruiterMode} setRecruiterMode={setRecruiterMode} />
       
-      <main className="mx-auto max-w-7xl px-6">
+      <main className="mx-auto max-w-7xl px-6 pb-24">
         <AnimatePresence mode="wait">
           {recruiterMode ? (
             <motion.div
@@ -45,7 +45,7 @@ export default function App() {
               transition={{ duration: 0.4 }}
             >
               <Hero />
-              <div className="space-y-32">
+              <div className="space-y-48">
                 <About />
                 <ExperienceSection />
                 <SkillVisualizer />
@@ -58,15 +58,15 @@ export default function App() {
         </AnimatePresence>
       </main>
 
-      {/* Subtle Scroll Indicator */}
+      {/* Sophisticated Scroll Indicator */}
       {!recruiterMode && (
         <motion.div 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 pointer-events-none"
+          className="fixed bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-3 pointer-events-none"
         >
-          <div className="w-[1px] h-12 bg-gradient-to-b from-transparent to-gray-200" />
-          <span className="text-[8px] font-bold uppercase tracking-[0.2em] text-gray-400">Scroll Exploration</span>
+          <div className="w-[1px] h-16 bg-gradient-to-b from-transparent via-grey-border-light to-transparent" />
+          <span className="text-[9px] font-medium uppercase tracking-[0.4em] text-grey-text-light">Discovery Scroll</span>
         </motion.div>
       )}
     </div>
